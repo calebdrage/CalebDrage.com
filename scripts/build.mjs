@@ -36,7 +36,7 @@ const projects = await Promise.all(c.projects.map(async (p,i) => {
 }));
 const description = `${c.name}, ${c.title} at ${c.university}, graduating ${c.graduation}. ${c.availability}.`;
 const toolkit = [...new Set(c.projects.flatMap(p => p.technologies))].map(t => `<li>${esc(t)}</li>`).join('');
-const html = `<!doctype html>
+let html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${esc(c.name)} — ${esc(c.title)}</title><meta name="description" content="${esc(description)}"><meta name="theme-color" content="#142322"><link rel="icon" type="image/svg+xml" href="./favicon.svg"><link rel="stylesheet" href="./styles.css">
 <meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:title" content="${esc(c.name)} — Portfolio"><meta property="og:description" content="${esc(description)}"><meta property="og:site_name" content="${esc(c.name)}"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="${esc(c.name)} — Portfolio"><meta name="twitter:description" content="${esc(description)}">${siteUrl ? `<link rel="canonical" href="${esc(siteUrl)}"><meta property="og:url" content="${esc(siteUrl)}">` : ''}
 </head><body><a class="skip" href="#main">Skip to content</a>
@@ -49,6 +49,8 @@ const html = `<!doctype html>
 <section class="contact" id="contact" aria-labelledby="contact-heading"><p class="eyebrow">05 / Contact</p><h2 id="contact-heading">Let's connect<span>.</span></h2><p>${esc(c.availability)}.</p><div class="contact-links">${c.email ? `<a class="email" href="mailto:${esc(c.email)}">${esc(c.email)} <span aria-hidden="true">↗</span></a>` : ''}${links.map(([label,url])=>external(label,url)).join('')}</div></section></main>
 <footer class="footer"><span>© ${new Date().getUTCFullYear()} ${esc(c.name)}</span><span>Computer Science · Florida Atlantic University</span><a href="#home">Back to top ↑</a></footer></body></html>`;
 const dist = resolve(root, 'dist');
+if (!resume) html = html.replace('<a href="#resume">Resume</a>', '').replace(/<section class="section resume"[\s\S]*?<\/section>/, '');
+if (!c.email && !links.length) html = html.replace('<a href="#contact">Contact <span aria-hidden="true">↗</span></a>', '').replace(/<section class="contact"[\s\S]*?<\/section>/, '');
 await rm(dist, {recursive:true, force:true});
 await mkdir(dist,{recursive:true});
 await cp(resolve(root,'public'),dist,{recursive:true});

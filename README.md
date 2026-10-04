@@ -38,4 +38,4 @@ Only files intentionally placed in `public/` are copied into the deployed websit
 
 ## Content still needed
 
-The initial content uses only the facts provided in the request. Contact URLs/email, resume, screenshots, project purposes/contributions/links, and a confirmed skills list still need to be supplied. Missing links are omitted rather than rendered as broken buttons. Complete these fields before presenting it as a finished employer-facing portfolio.
+The initial content uses only the facts provided in the request. Contact URLs/email, resume, screenshots, project purposes/contributions/links, and a confirmed skills list can be added later. Missing links and unavailable resume/contact sections are omitted from the published page. Edit `content.json` and push to `main` to publish updates.
