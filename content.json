@@ -1,0 +1,20 @@
+{
+  "name": "Caleb Drage",
+  "title": "Computer Science student",
+  "university": "Florida Atlantic University",
+  "graduation": "Spring 2027",
+  "availability": "Seeking software development internships and entry-level opportunities",
+  "intro": "Computer Science student at Florida Atlantic University, graduating Spring 2027. My projects span websites, iOS coursework, and a desktop application.",
+  "about": "I'm Caleb, a Computer Science student at Florida Atlantic University. My work includes the Boca Chesed House website, Swift/iOS coursework apps, and an Electron desktop app. I'm looking for software development internships and entry-level opportunities.",
+  "email": null,
+  "github": null,
+  "linkedin": null,
+  "resume": null,
+  "siteUrl": null,
+  "skills": [],
+  "projects": [
+    {"name": "Boca Chesed House", "category": "Website", "description": "Boca Chesed House website project.", "purpose": null, "contribution": null, "technologies": [], "demo": null, "source": null, "screenshot": null, "screenshotAlt": null},
+    {"name": "Swift / iOS coursework", "category": "iOS applications", "description": "Apps developed as part of Swift/iOS coursework.", "purpose": null, "contribution": null, "technologies": ["Swift", "iOS"], "demo": null, "source": null, "screenshot": null, "screenshotAlt": null},
+    {"name": "Electron desktop app", "category": "Desktop application", "description": "An Electron desktop application project.", "purpose": null, "contribution": null, "technologies": ["Electron"], "demo": null, "source": null, "screenshot": null, "screenshotAlt": null}
+  ]
+}
