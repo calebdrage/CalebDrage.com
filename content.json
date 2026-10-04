@@ -4,17 +4,120 @@
   "university": "Florida Atlantic University",
   "graduation": "Spring 2027",
   "availability": "Seeking software development internships and entry-level opportunities",
-  "intro": "Computer Science student at Florida Atlantic University, graduating Spring 2027. My projects span websites, iOS coursework, and a desktop application.",
-  "about": "I'm Caleb, a Computer Science student at Florida Atlantic University. My work includes the Boca Chesed House website, Swift/iOS coursework apps, and an Electron desktop app. I'm looking for software development internships and entry-level opportunities.",
+  "heroHeading": ["Stay requests.", "Follow lists.", "Photo quests."],
+  "heroProjects": ["boca", "instagram", "scavenger"],
+  "intro": "I'm Caleb Drage, a Computer Science student at Florida Atlantic University, graduating Spring 2027. I build across the web, desktop, and iOS—from reviewing lodging requests to comparing follow lists and completing photo quests.",
+  "about": "My work spans a lodging website and staff review workflow, an Electron utility for comparing follow lists, and Swift/iOS coursework. These projects connect interface controls to useful actions: choosing dates, reviewing a request, exporting a result, or attaching a photo. I'll graduate from Florida Atlantic University in Spring 2027 and am seeking software development internships and entry-level opportunities.",
   "email": null,
-  "github": null,
+  "github": "https://github.com/calebdrage",
   "linkedin": null,
   "resume": null,
   "siteUrl": "https://calebdrage.github.io/CalebDrage.com/",
   "skills": [],
   "projects": [
-    {"name": "Boca Chesed House", "category": "Website", "description": "Boca Chesed House website project.", "purpose": null, "contribution": null, "technologies": [], "demo": null, "source": null, "screenshot": null, "screenshotAlt": null},
-    {"name": "Swift / iOS coursework", "category": "iOS applications", "description": "Apps developed as part of Swift/iOS coursework.", "purpose": null, "contribution": null, "technologies": ["Swift", "iOS"], "demo": null, "source": null, "screenshot": null, "screenshotAlt": null},
-    {"name": "Electron desktop app", "category": "Desktop application", "description": "An Electron desktop application project.", "purpose": null, "contribution": null, "technologies": ["Electron"], "demo": null, "source": null, "screenshot": null, "screenshotAlt": null}
-  ]
+    {
+      "id": "boca", "name": "Boca Chesed House", "category": "Web application", "label": "Lodging requests & staff review",
+      "description": "A public website and application workflow for families seeking lodging near the hospital, with a staff review experience that puts requested dates and approved stays in context.",
+      "purpose": "Help families request a stay and give staff the information they need to review it. Submitting an application does not confirm a reservation.",
+      "contribution": "Built the React/TypeScript website, stay-date picker, and application review interface. The review flow includes status filters, application details, internal notes, calendars, and confirmed status changes.",
+      "technologies": ["React", "TypeScript", "Vite", "Supabase", "PostgreSQL", "React DayPicker"],
+      "features": [
+        "Arrival/departure selection with past dates disabled and a departure later than arrival.",
+        "Staff calendars highlight approved stays and the current request; selecting a date reveals matching stays and requests.",
+        "Pending requests that overlap approved stays show a conflict warning and options to keep pending or deny.",
+        "Approve, deny, return to pending, and mark-as-spam actions use a confirmation step; staff can also save internal notes."
+      ],
+      "details": [
+        {"title": "Dates have explicit boundaries", "body": "The overlap check includes both arrival and departure dates. An arrival on another stay's departure day still warns the reviewer. Before requesting approval, the interface refreshes approved ranges rather than relying on a stale list."},
+        {"title": "A warning informs the decision", "body": "Conflicts are warnings, not an automatic rejection or a claim about room capacity. The normal conflicting-pending view offers Keep Pending and Deny Request; if an approval check discovers a conflict, its confirmation can explicitly approve anyway."},
+        {"title": "Status changes have a server-side record", "body": "The application calls a PostgreSQL status-update function through Supabase. The checked-in migrations enforce staff authorization, enable row-level security, and write status history. This describes implemented code, not a claim that production launch is complete."}
+      ],
+      "demo": "https://bocachesedhouse.netlify.app/", "demoLabel": "Website preview", "source": null, "release": null,
+      "screenshot": "images/boca-website.jpg",
+      "screenshotAlt": "Actual Boca Chesed House website preview, with its lodging introduction and welcome-sign image.",
+      "previewCaption": "Actual public website preview. Staff data is not shown.", "previewKind": "desktop", "walkthrough": null, "interactiveDemo": "stay-review"
+    },
+    {
+      "id": "instagram", "name": "Instagram Follow Checker", "category": "Windows desktop application", "label": "Guided collection → useful results",
+      "description": "An Electron utility that guides manual sign-in and list collection, then identifies accounts in Following that are absent from Followers. Results can be copied or exported to CSV.",
+      "purpose": "Turn two collected Instagram lists into a readable comparison without asking for an Instagram password inside the application.",
+      "contribution": "Built the desktop workflow around a visible Playwright Chromium session: sign in, choose a profile, collect Followers, collect Following, and review results. Added result actions, preferences, and Windows packaging.",
+      "technologies": ["Electron", "JavaScript", "Node.js", "Playwright", "Electron Builder"],
+      "features": [
+        "Guided manual login in a separate Chromium window, followed by profile and list-selection steps.",
+        "Progress counts, cancellation, and retry/home recovery controls during collection.",
+        "Sorted Not Following Back results with individual copy/profile actions, Copy All, and CSV export.",
+        "Persistent verified-account filtering and collection-speed settings, plus installer and portable build targets."
+      ],
+      "details": [
+        {"title": "Compare the collected lists", "body": "The comparison keeps Following usernames that do not exist in Followers, applies the optional verified-account filter, and sorts the output. Collection deduplicates profile observations; the portfolio demo represents only this comparison step."},
+        {"title": "Keep desktop capabilities behind a bridge", "body": "The Electron window uses context isolation with Node integration disabled. A preload bridge exposes named IPC operations for the renderer's session, settings, clipboard, and export actions."},
+        {"title": "Export the active result", "body": "The CSV handler opens a native save dialog and writes the currently displayed result with quoted usernames. The public GitHub repository distributes the Windows installer; it does not contain the original app source."}
+      ],
+      "demo": null, "source": null,
+      "release": "https://github.com/calebdrage/Instagram-Follow-Checker-Download/releases/tag/v2.2.0", "releaseLabel": "Windows release",
+      "screenshot": "images/instagram-interface.jpg",
+      "screenshotAlt": "Actual Instagram Follow Checker home interface, with manual sign-in guidance and its Start Check button.",
+      "previewCaption": "Original HTML/CSS interface, rendered locally for this capture.", "previewKind": "desktop", "walkthrough": null, "interactiveDemo": "follow-comparison"
+    },
+    {
+      "id": "scavenger", "name": "Scavenger Hunt", "category": "Swift / iOS coursework", "label": "A photo turns a task into a place",
+      "description": "A UIKit coursework app with a task list and detail screens. Attaching a location-enabled photo marks a task complete and places a photo annotation on a MapKit map.",
+      "purpose": "Complete scavenger-hunt tasks with photo evidence, and show where each attached photo was taken.",
+      "contribution": "Extended a UIKit coursework starter with the scavenger task content and a separate photo-view screen. The project connects task details, photo selection, completion state, and map annotations.",
+      "technologies": ["Swift", "UIKit", "PhotosUI", "Photos", "MapKit", "CoreLocation", "Xcode Storyboards"],
+      "features": [
+        "A task list opens title/description details and refreshes completion state when returning.",
+        "PHPicker selects one image; its Photos asset supplies location metadata.",
+        "An attached photo marks the in-memory task complete and updates the detail interface.",
+        "MapKit centers on the photo's location with a custom photo annotation; View Photo opens a separate screen."
+      ],
+      "details": [
+        {"title": "One model connects the screens", "body": "Task holds a title, description, optional image, and optional CLLocation. Its isComplete property is derived from whether an image exists. The task list reloads when it reappears."},
+        {"title": "Photo location is a real constraint", "body": "The picker delegate guards on a Photos asset with location metadata before loading and attaching the image. In this implementation, a photo without location metadata does not complete the task."},
+        {"title": "A focused coursework implementation", "body": "The photo screen displays the task's image with aspect-fit sizing. Task state is held in memory; the code does not establish saved-task persistence or a backend."}
+      ],
+      "demo": null, "source": null, "release": null,
+      "screenshot": "images/scavenger-hunt.jpg",
+      "screenshotAlt": "Actual Scavenger Hunt task-detail screen for Find something blue, showing an incomplete task and Attach Photo.",
+      "previewCaption": "Actual task-detail screen from the coursework walkthrough.", "previewKind": "phone", "walkthrough": null, "interactiveDemo": null
+    },
+    {
+      "id": "introduce", "name": "Introduce Yourself", "category": "Swift / iOS prework", "label": "Interface controls → an introduction",
+      "description": "A small UIKit app that gathers a name, school, academic year, pet count, and pet preference, then composes an introduction in a native alert.",
+      "purpose": "Practice wiring storyboard controls to Swift actions and turning interface state into a readable introduction.",
+      "contribution": "Built the prework interface and Swift view controller, connecting text fields, segmented year selection, a stepper, a switch, and the Introduce Self action.",
+      "technologies": ["Swift", "UIKit", "Xcode Storyboards"],
+      "features": [
+        "First name, last name, and school text fields.",
+        "A segmented academic-year control and a pet-count stepper that updates its label.",
+        "A switch records the more-pets preference.",
+        "Introduce Self reads the controls and presents a UIAlertController with the composed introduction."
+      ],
+      "details": [
+        {"title": "Actions make the controls useful", "body": "The stepper's value-changed action converts its numeric value to the pet-count label. The introduction action reads the selected year title, text fields, count label, and switch state."},
+        {"title": "A local, native interaction", "body": "The controller builds a multiline introduction and presents a native alert with a dismissal action. The inspected source does not add networking or persistent storage."}
+      ],
+      "demo": null, "source": "https://github.com/Cdrage2022/IOS102Prework", "release": null,
+      "screenshot": "images/introduce-yourself.jpg",
+      "screenshotAlt": "Actual Introduce Yourself iOS interface with FAU logo, text fields, year selection, pet-count stepper, and preference switch.",
+      "previewCaption": "Still from the repository's simulator recording. Inputs are walkthrough examples.", "previewKind": "phone",
+      "walkthrough": "images/introduce-walkthrough.gif", "interactiveDemo": null
+    }
+  ],
+  "demoData": {
+    "stayReview": {
+      "month": "2026-11",
+      "request": {"id": "sample-request", "arrival_date": "2026-11-09", "departure_date": "2026-11-12", "status": "pending"},
+      "stays": [
+        {"id": "sample-stay-a", "label": "Sample approved stay A", "arrival_date": "2026-11-06", "departure_date": "2026-11-10", "status": "approved"},
+        {"id": "sample-stay-b", "label": "Sample approved stay B", "arrival_date": "2026-11-16", "departure_date": "2026-11-19", "status": "approved"}
+      ],
+      "clearRange": {"arrival_date": "2026-11-21", "departure_date": "2026-11-24"}
+    },
+    "followComparison": {
+      "followers": ["sample_avery", "sample_jordan", "sample_morgan"],
+      "following": ["sample_avery", "sample_casey", "sample_morgan", "sample_riley"]
+    }
+  }
 }
